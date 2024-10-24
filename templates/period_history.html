@@ -1,0 +1,77 @@
+<!-- period_history.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period History - Period Tracker</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        h1, h2 {
+            color: #4A4A4A;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Period History</h1>
+        
+        <table class="table table-striped mt-4">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Start Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Symptoms</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for period in periods %}
+                <tr>
+                    <td>{{ period.start_date }}</td>
+                    <td>{{ period.start_time }}</td>
+                    <td>{{ period.end_time }}</td>
+                    <td>{{ period.symptoms }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No periods recorded yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 class="mt-4">Add New Period</h2>
+        <form action="{{ url_for('add_period') }}" method="POST">
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="start_time">Start Time:</label>
+                <input type="time" class="form-control" id="start_time" name="start_time" required>
+            </div>
+            <div class="form-group">
+                <label for="end_time">End Time:</label>
+                <input type="time" class="form-control" id="end_time" name="end_time" required>
+            </div>
+            <div class="form-group">
+                <label for="symptoms">Symptoms:</label>
+                <textarea class="form-control" id="symptoms" name="symptoms"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Add Period</button>
+        </form>
+        <br>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

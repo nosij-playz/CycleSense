@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- FontAwesome -->
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("{{ url_for('static', filename='bgimg/bgimg.jpg') }}"); /* Background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the background image */
+            color: #333;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        /* Profile icon styling */
+        .profile-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #4CAF50;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s; /* Smooth transition */
+        }
+
+        .profile-icon:hover {
+            color: #45a049; /* Change color on hover */
+        }
+
+        /* Container for main content */
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Add a slight background color for better readability */
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Left column for periods */
+        .left-column {
+            width: 45%;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        .periods-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .periods-list li {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Right column for countdown and form */
+        .right-column {
+            width: 45%;
+            padding: 20px;
+        }
+
+        #countdown-title {
+            text-align: center;
+        }
+
+        #countdown {
+            font-size: 24px;
+            text-align: center;
+            margin: 20px 0;
+            color: #FF5733;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="date"], input[type="time"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ session['username'] }}</h1>
+    <div class="container">
+        <!-- Left column for periods list -->
+        <div class="left-column">
+            <h2>Periods History</h2>
+            <ul class="periods-list">
+                {% for period in periods %}
+                <li>
+                    <h3>Period {{ loop.index }}</h3>
+                    <strong>Start Date:</strong> {{ period.start_date }}<br>
+                    <strong>Start Time:</strong> {{ period.start_time }}<br>
+                    <strong>End Time:</strong> {{ period.end_time }}<br>
+                    <strong>Symptoms:</strong> {{ period.symptoms }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Right column for countdown and form -->
+        <div class="right-column">
+            <div class="countdown-container">
+                <h2 id="countdown-title">Next periods in:</h2>
+                <div id="countdown"></div>
+            </div>
+            
+            <h2>Add Period</h2>
+            <form action="{{ url_for('add_period') }}" method="post">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" required><br>
+                <label for="start_time">Start Time:</label>
+                <input type="time" id="start_time" name="start_time" required><br>
+                <label for="end_time">End Time:</label>
+                <input type="time" id="end_time" name="end_time" required><br>
+                <input type="text" name="symptoms" placeholder="Symptoms"><br>
+                <button type="submit">Add Period</button>
+            </form>
+            <form action="{{ url_for('select_symptoms') }}" method="get">
+                <button type="submit">Relief Steps</button>
+            </form>
+
+            <form action="{{ url_for('logout') }}" method="get">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            var avgPeriodGap = {{ avg_period_gap }};
+            var days = Math.floor(avgPeriodGap);
+            var hours = Math.floor((avgPeriodGap - days) * 24);
+            document.getElementById('countdown').innerText = days + ' days ' + hours + ' hours';
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>
