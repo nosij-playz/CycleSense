@@ -75,4 +75,4 @@ Period-Tracker/
 
 ## 📬 Contact
 
-For inquiries, feedback, or collaboration requests, please reach out via the contact form on my [portfolio website](https://myporfolio-1o1h.onrender.com/contact).
+For inquiries, feedback, or collaboration requests, please reach out via the contact form on my [contact me:](https://myporfolio-1o1h.onrender.com/contact).
