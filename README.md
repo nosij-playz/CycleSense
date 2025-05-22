@@ -1,4 +1,4 @@
-# Period Tracker
+# CycleSense(Period Tracker)
 
 A simple and user-friendly web application designed to help individuals monitor and manage their menstrual cycles. This tool allows users to log period dates, visualize cycle patterns, and maintain a personal health record.
 
