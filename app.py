@@ -4,7 +4,7 @@ import datetime
 
 app = Flask(__name__)
 app.secret_key = '5t5t5t'  # Change this to a secure value
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://avnadmin:AVNS_hiGi3lLZCjDXNWfzCqH@mysql-305e0b5d-projectperiods1-e48a.j.aivencloud.com:23348/defaultdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'Your mysql db link here'
 db = SQLAlchemy(app)
 class UserProfile(db.Model):
     __tablename__ = 'user_profile'
